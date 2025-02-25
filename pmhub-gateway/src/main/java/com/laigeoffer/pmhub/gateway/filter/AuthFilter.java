@@ -86,6 +86,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 //        return chain.filter(exchange.mutate().request(mutate.build()).build());
 
         // Mono.fromRunnable 是非阻塞的，适合在 then 中处理后续的日志逻辑。
+        // filter 的返回和 then中的日志处是异步的
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
             try {
                 // 记录接口访问日志
